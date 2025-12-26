@@ -80,10 +80,10 @@ AWS EC2 (t3.small)
 |-- cAdvisor & Nginx Exporters
 |-- Monitoring Stack
 
+
 ---
 
 ## 📁 Repository Structure
-
 .
 ├── application/
 │ └── deploy-app/ # React build output
