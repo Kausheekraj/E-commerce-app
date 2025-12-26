@@ -59,6 +59,7 @@ pipeline {
                         ./operation/scripts/compose.sh -P -d
                         """
                     }
+                  }
                 }
             }
         }
