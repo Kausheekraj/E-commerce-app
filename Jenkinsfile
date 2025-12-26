@@ -43,6 +43,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
+                  docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDS) {
                     if (env.BRANCH_NAME == 'dev') {
                         sh """
                         echo 'Stopping existing containers before deployment'
