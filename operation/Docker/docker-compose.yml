@@ -12,6 +12,9 @@ services:
 
   # --- DEV APP ---
   dev:
+    build:
+      context: ../../
+      dockerfile: operation/Docker/Dockerfile
     image: kausheekraj/ecommerce-nginx-dev
     container_name: ecommerce-app-dev
     ports:
@@ -28,6 +31,9 @@ services:
 
   # --- PROD APP ---
   prod:
+    build:
+      context: ../../
+      dockerfile: operation/Docker/Dockerfile
     image: kausheekraj/ecommerce-nginx
     container_name: ecommerce-app
     ports:
