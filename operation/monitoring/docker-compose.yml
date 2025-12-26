@@ -7,7 +7,6 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - ./alert.rules.yml:/etc/prometheus/alert.rules.yml
-      - ./alertmanager/slack_url:/etc/alertmanager/slack_url:ro
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
 
@@ -19,8 +18,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
-    environment:
-      SLACK_API_URL: "${SLACK_API_URL}"
+      - ./alertmanager/slack_url:/etc/alertmanager/slack_url:ro
 
   grafana:
     image: grafana/grafana
