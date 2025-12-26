@@ -1,0 +1,9 @@
+route:
+  receiver: "slack-alerts"
+  repeat_interval: "4h"
+  group_by: [alertname]
+receivers:
+  - name: "slack-alerts"
+    slack_configs:
+      - channel: "#all-app-alerts"
+        api_url: "${SLACK_API_URL}"

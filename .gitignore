@@ -1,0 +1,22 @@
+# Node-related
+node_modules/
+npm-debug.log
+yarn-error.log
+
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+
+# Docker
+*.log
+.dockerignore
+.jenkins
+project-log.md
+.compose.yml
+operation/monitoring/.alertrules.yml
+operation/monitoring/app-compose.yml
+install.sh
+install-setup.sh
+operation/scripts/buildv2.sh
+.env

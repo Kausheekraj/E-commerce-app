@@ -1,0 +1,56 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = "kausheekraj/ecommerce-nginx"
+        DOCKER_CREDS = "docker_pat"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: env.BRANCH_NAME,
+                    url: 'https://github.com/Kausheekraj/E-commerce-app.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    if (env.BRANCH_NAME == 'dev') {
+                        sh "./operation/scripts/compose.sh -D -b"
+                    } else if (env.BRANCH_NAME == 'master') {
+                        sh "./operation/scripts/compose.sh -P -b"
+                    }
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDS) {
+                        if (env.BRANCH_NAME == 'dev') {
+                            sh "./operation/scripts/compose.sh -D -p"
+                        } else if (env.BRANCH_NAME == 'master') {
+                            sh "./operation/scripts/compose.sh -P -p"
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    if (env.BRANCH_NAME == 'dev') {
+                        sh "./operation/scripts/compose.sh -D --rm-all -d"
+                    } else if (env.BRANCH_NAME == 'master') {
+                        sh "./operation/scripts/compose.sh -P --rm-all -d"
+                    }
+                }
+            }
+        }
+    }
+}
+

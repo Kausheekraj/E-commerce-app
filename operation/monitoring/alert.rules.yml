@@ -1,0 +1,11 @@
+groups:
+  - name: container-down
+    rules:
+      - alert: AppContainerDown
+        expr: time() - container_last_seen{name=~"ecommerce-app(-dev)?"} > 30
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Application container down"
+          description: "Container {{ $labels.name }} has stopped or is unreachable."

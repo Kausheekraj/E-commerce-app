@@ -1,0 +1,43 @@
+services:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor
+    container_name: cadvisor
+    ports:
+      - "8081:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  # --- DEV APP ---
+  dev:
+    image: kausheekraj/ecommerce-nginx-dev
+    container_name: ecommerce-app-dev
+    ports:
+      - "9090:80" # Dev app exposed on host port 8080
+
+  nginx-export-dev:
+    image: nginx/nginx-prometheus-exporter:latest
+    container_name: metrics-exporter-dev
+    ports:
+      - "9114:9113" # Dev exporter exposed on host port 9114
+    command: -nginx.scrape-uri=http://ecommerce-dev/stub_status
+    depends_on:
+      - dev
+
+  # --- PROD APP ---
+  prod:
+    image: kausheekraj/ecommerce-nginx
+    container_name: ecommerce-app
+    ports:
+      - "80:80"
+
+  nginx-export-prod:
+    image: nginx/nginx-prometheus-exporter:latest
+    container_name: metrics-exporter-prod
+    ports:
+      - "9115:9113" # Prod exporter exposed on host port 9115
+    command: -nginx.scrape-uri=http://ecommerce-prod/stub_status
+    depends_on:
+      - prod
