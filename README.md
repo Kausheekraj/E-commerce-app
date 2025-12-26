@@ -66,7 +66,7 @@ Developer
 v
 GitHub Repository
 |
-| (Webhook)
+| (Webhook via Cloudflared)
 v
 Jenkins Pipeline
 |
@@ -77,11 +77,8 @@ v
 AWS EC2 (t3.small)
 |
 |-- Nginx App Containers
-|-- cAdvisor & Exporters
+|-- cAdvisor & Nginx Exporters
 |-- Monitoring Stack
-
-yaml
-Copy code
 
 ---
 
@@ -92,16 +89,13 @@ Copy code
 │ └── deploy-app/ # React build output
 │
 ├── operation/
-│ ├── Docker/ # Dockerfile, docker-compose
+│ ├── Docker/ # Dockerfile, docker-compose.yml
 │ ├── scripts/ # build, deploy, orchestration scripts
 │ └── monitoring/ # Prometheus, Grafana, Alertmanager configs
 │
 ├── Jenkinsfile # CI/CD pipeline
 ├── .gitignore
 └── README.md
-
-yaml
-Copy code
 
 ## 🐳 Docker & Deployment Design
 
