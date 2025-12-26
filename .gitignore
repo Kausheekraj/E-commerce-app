@@ -21,3 +21,4 @@ install-setup.sh
 operation/scripts/buildv2.sh
 .env
 .Jenkins
+operation/monitoring/alertmanager/
